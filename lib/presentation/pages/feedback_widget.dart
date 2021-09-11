@@ -12,6 +12,8 @@ import 'package:flutter_clean_architecture_template/usecase/feedback/feedback_bl
 class FeedbackWidget extends StatelessWidget {
   late final AppLocalizations localizations;
 
+  FeedbackWidget({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     localizations = AppLocalizations.of(context)!;
@@ -19,13 +21,13 @@ class FeedbackWidget extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           switch (state.status) {
-            case Status.INITIAL:
+            case Status.initial:
               return _buildFeedbackForm(context, state);
-            case Status.LOADING:
+            case Status.loading:
               return LoadingWidget();
-            case Status.SUCCESS:
+            case Status.success:
               return SuccessWidget();
-            case Status.ERROR:
+            case Status.error:
               return ResponseErrorWidget(
                   userAction: _onErrorHandling,
                   errorMessage: localizations.errorFeedback);
@@ -38,7 +40,7 @@ class FeedbackWidget extends StatelessWidget {
   Widget _buildFeedbackForm(BuildContext context, FeedbackState state) {
     final feedbackBloc = BlocProvider.of<FeedbackBloc>(context);
     return Center(
-      child: Container(
+      child: SizedBox(
         width: 500,
         child: Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -47,7 +49,7 @@ class FeedbackWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(32, 16, 32, 8),
+                padding: const EdgeInsets.fromLTRB(32, 16, 32, 8),
                 child: TextFormField(
                   autovalidateMode: state.showError
                       ? AutovalidateMode.always
@@ -62,25 +64,25 @@ class FeedbackWidget extends StatelessWidget {
                   },
                   decoration: InputDecoration(
                       labelText: localizations.title,
-                      border: OutlineInputBorder()),
+                      border: const OutlineInputBorder()),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.fromLTRB(32, 8, 32, 16),
+                padding: const EdgeInsets.fromLTRB(32, 8, 32, 16),
                 child: TextFormField(
                   onChanged: (e) =>
                       feedbackBloc.add(FeedbackEvent.onDescriptionChanged(e)),
                   decoration: InputDecoration(
                     labelText: localizations.description,
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                   ),
                 ),
               ),
               ElevatedButton(
                 onPressed: () => feedbackBloc.add(FeedbackEvent.submit()),
                 style: ElevatedButton.styleFrom(
-                  minimumSize: Size(500, 64),
-                  shape: RoundedRectangleBorder(
+                  minimumSize: const Size(500, 64),
+                  shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),

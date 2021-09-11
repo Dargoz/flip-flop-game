@@ -22,14 +22,14 @@ class FeedbackBloc extends Bloc<FeedbackEvent, FeedbackState> {
     yield* event.map(submit: (_) async* {
       print('on feedback submit event : $state');
       if (state.issue != null && state.issue!.title.isNotEmpty) {
-        yield FeedbackState(status: Status.LOADING, showError: false);
+        yield FeedbackState(status: Status.loading, showError: false);
         try {
           var response = await repository.createAndIssue(state.issue!);
           yield FeedbackState(
-              issue: state.issue, status: Status.SUCCESS, showError: false);
+              issue: state.issue, status: Status.success, showError: false);
         } catch (e) {
           yield FeedbackState(
-              issue: state.issue, status: Status.ERROR, showError: false);
+              issue: state.issue, status: Status.error, showError: false);
         }
       } else {
         yield FeedbackState(issue: state.issue, showError: true);

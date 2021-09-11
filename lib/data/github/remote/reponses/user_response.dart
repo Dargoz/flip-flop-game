@@ -20,9 +20,9 @@ class UserResponse {
       required this.organizationsUrl,
       required this.reposUrl,
       required this.eventsUrl,
-      required this.received_eventsUrl,
+      required this.receivedEventsUrl,
       required this.type,
-      required this.site_admin});
+      required this.siteAdmin});
 
   String login;
   int id;
@@ -39,9 +39,9 @@ class UserResponse {
   String organizationsUrl;
   String reposUrl;
   String eventsUrl;
-  String received_eventsUrl;
+  String receivedEventsUrl;
   String type;
-  bool site_admin;
+  bool siteAdmin;
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);

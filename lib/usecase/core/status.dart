@@ -1,7 +1,7 @@
 
 enum Status {
-  INITIAL,
-  LOADING,
-  SUCCESS,
-  ERROR,
+  initial,
+  loading,
+  success,
+  error,
 }

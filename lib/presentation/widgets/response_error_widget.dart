@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class ResponseErrorWidget extends StatelessWidget {
-  ResponseErrorWidget({this.userAction, this.errorMessage});
+  const ResponseErrorWidget({this.userAction, this.errorMessage});
 
   final dynamic userAction;
 
@@ -18,7 +18,7 @@ class ResponseErrorWidget extends StatelessWidget {
           ElevatedButton(
               onPressed: () {
                 userAction(errorMessage);
-              }, child: Text("Back"))
+              }, child: const Text("Back"))
         ],
       ),
     );

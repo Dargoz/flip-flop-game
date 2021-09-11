@@ -1,3 +1,3 @@
-const String githubToken = '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';
+const String githubToken = 'YOUR_ACCESS_TOKEN';
 const String githubUser = 'Dargoz';
-const String githubRepository = 'Extended-Bottom-Navigation-View';
+const String githubRepository = 'flutter_clean_architecture_template';
