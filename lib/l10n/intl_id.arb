@@ -3,5 +3,8 @@
   "feedback": "Umpan balik",
   "title": "judul",
   "description": "keterangan",
-  "errorFeedback": "error submit feedback"
+  "errorFeedback": "error submit feedback",
+  "start": "Mulai",
+  "leaderboard": "Papan Peringkat",
+  "about": "Tentang"
 }
