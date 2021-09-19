@@ -15,7 +15,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc()
       : super(GameState(
             showFrontSide: List.filled(GameConfig.quantity, false),
-            openedCardPosition: List.empty(growable: true)));
+            openedCardPosition: List.empty(growable: true),
+            cardPair: List.filled(2, "")));
 
   @override
   Stream<GameState> mapEventToState(GameEvent event) async* {
@@ -25,7 +26,9 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           print("openCard count : ${state.openedCardCount}");
           int openCount = 0;
           if (state.allowUserAction) {
+            state.cardPair[state.openedCardCount] = onTapCard.cardIdentity;
             openCount = ++state.openedCardCount;
+
             state.showFrontSide[onTapCard.position] =
                 !state.showFrontSide[onTapCard.position];
             state.openedCardPosition.add(onTapCard.position);
@@ -44,8 +47,18 @@ class GameBloc extends Bloc<GameEvent, GameState> {
             print("on ${animationStatus.status} : ${state.animationEndCount}");
             if (state.animationEndCount == 2) {
               validate();
+              if (!state.wrong) {
+                state.correct++;
+                reset();
+              }
+              if (state.correct == GameConfig.quantity / 2) {
+                state.gameEnd = true;
+              }
               yield _copyWith();
-            } else if (state.animationEndCount == 4) {}
+            } else if (state.animationEndCount == 4) {
+              reset();
+              yield _copyWith();
+            }
           }
         },
         onValidate: (GameValidate value) async* {},
@@ -53,20 +66,26 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   }
 
   void validate() {
-
-    print("opened Card List : ${state.openedCardPosition.length} :: ${state.openedCardPosition}");
+    print(
+        "opened Card List : ${state.openedCardPosition.length} :: ${state.openedCardPosition}");
     print("onValidate : ${state.showFrontSide}");
-    state.wrong = true;
+    var identity1 = state.cardPair[0].split('-')[0];
+    var identity2 = state.cardPair[1].split('-')[0];
+    print('identity1 : $identity1 == identity2 : $identity2');
+    state.wrong = identity1 != identity2;
   }
 
   GameState _copyWith() {
     return GameState(
         showFrontSide: state.showFrontSide,
         openedCardPosition: state.openedCardPosition,
+        cardPair: state.cardPair,
         openedCardCount: state.openedCardCount,
         animationEndCount: state.animationEndCount,
+        correct: state.correct,
         allowUserAction: state.allowUserAction,
-        wrong: state.wrong);
+        wrong: state.wrong,
+        gameEnd: state.gameEnd);
   }
 
   void _replaceState(GameState gameState) {
@@ -75,5 +94,13 @@ class GameBloc extends Bloc<GameEvent, GameState> {
     state.animationEndCount = gameState.animationEndCount;
     state.allowUserAction = gameState.allowUserAction;
     state.wrong = gameState.wrong;
+  }
+
+  void reset() {
+    state.openedCardCount = 0;
+    state.animationEndCount = 0;
+    state.allowUserAction = true;
+    state.wrong = false;
+    state.showFrontSide = List.filled(GameConfig.quantity, false);
   }
 }

@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_clean_architecture_template/domain/game/entity/game.dart';
+import 'package:flutter_clean_architecture_template/domain/game/entity/game_properties.dart';
+import 'package:flutter_clean_architecture_template/domain/game/usecases/game_use_case.dart';
 import 'package:flutter_clean_architecture_template/injection.dart';
 import 'package:flutter_clean_architecture_template/presentation/navigation/app_route.gr.dart';
 import 'package:flutter_clean_architecture_template/usecase/feedback/feedback_bloc.dart';
@@ -33,7 +36,7 @@ class MyHomePage extends StatelessWidget {
                         cursor: SystemMouseCursors.click,
                         child: GestureDetector(
                           onTap: () {
-                            context.navigateTo(GameRoute(username: 'DRG'));
+                            createNewGame(context);
                           },
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
@@ -85,5 +88,14 @@ class MyHomePage extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  void createNewGame(BuildContext context) async {
+    GameUseCase gameUseCase = getIt<GameUseCase>();
+    print('game use case : $gameUseCase');
+    Game game = await gameUseCase
+        .executeUseCase(GameProperties(seed: 1));
+    context.navigateTo(
+        GameRoute(username: 'DRG', game: game));
   }
 }

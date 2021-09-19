@@ -2,14 +2,20 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_template/domain/game/constants.dart';
 import 'package:flutter_clean_architecture_template/usecase/game/game_bloc.dart';
 
 class CardFlipWidget extends StatefulWidget {
-  const CardFlipWidget({Key? key, this.position = undefined}) : super(key: key);
+  const CardFlipWidget(
+      {Key? key,
+      this.position = undefined,
+      required this.frontAsset,
+      required this.rearAsset})
+      : super(key: key);
 
   static const int undefined = -1;
   final int position;
+  final String frontAsset;
+  final String rearAsset;
 
   @override
   _CardWidgetState createState() => _CardWidgetState();
@@ -53,31 +59,34 @@ class _CardWidgetState extends State<CardFlipWidget> {
   }
 
   void _openCard() {
-    BlocProvider.of<GameBloc>(context)
-        .add(GameEvent.onTapCard(widget.position));
-    if (_allowAction) {
-      setState(() {
-        _showFrontSide = true;
-      });
+    if(!_showFrontSide) {
+      BlocProvider.of<GameBloc>(context)
+          .add(GameEvent.onTapCard(widget.position, widget.frontAsset));
+      if (_allowAction) {
+        setState(() {
+          _showFrontSide = true;
+        });
+      }
     }
+
   }
 
   void _closeCard() {
-      _showFrontSide = false;
+    _showFrontSide = false;
   }
 
   Widget _buildFlipAnimation() {
     return BlocConsumer<GameBloc, GameState>(
         listener: (context, state) {},
         builder: (context, state) {
-          _allowAction = state.openedCardCount != GameConfig.maxOpenedCard;
+          _allowAction = state.allowUserAction;
           if (state.wrong && state.showFrontSide[widget.position]) {
             _closeCard();
           }
           return GestureDetector(
             onTap: _onTapCard,
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 400),
               transitionBuilder: __transitionBuilder,
               layoutBuilder: (widget, list) =>
                   Stack(children: [widget!, ...list]),
@@ -120,14 +129,14 @@ class _CardWidgetState extends State<CardFlipWidget> {
   Widget _buildFront() {
     return Container(
       key: const ValueKey(true),
-      child: Image.asset('resources/pack1/davin_image.png'),
+      child: Image.asset(widget.frontAsset),
     );
   }
 
   Widget _buildRear() {
     return Container(
       key: const ValueKey(false),
-      child: Image.asset('resources/cover/card_rear_bg.png'),
+      child: Image.asset(widget.rearAsset),
     );
   }
 
