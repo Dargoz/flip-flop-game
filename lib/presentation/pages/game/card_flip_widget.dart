@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_template/usecase/game/game_bloc.dart';
+import 'package:flip_flop_game/usecase/game/game_bloc.dart';
 
 class CardFlipWidget extends StatefulWidget {
   const CardFlipWidget(

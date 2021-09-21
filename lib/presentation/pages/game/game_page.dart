@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_template/domain/game/constants.dart';
-import 'package:flutter_clean_architecture_template/domain/game/entity/game.dart';
-import 'package:flutter_clean_architecture_template/injection.dart';
-import 'package:flutter_clean_architecture_template/presentation/pages/game/card_flip_widget.dart';
-import 'package:flutter_clean_architecture_template/usecase/game/game_bloc.dart';
+import 'package:flip_flop_game/domain/game/constants.dart';
+import 'package:flip_flop_game/domain/game/entity/game.dart';
+import 'package:flip_flop_game/injection.dart';
+import 'package:flip_flop_game/presentation/pages/game/card_flip_widget.dart';
+import 'package:flip_flop_game/usecase/game/game_bloc.dart';
 
 class GamePage extends StatelessWidget {
   const GamePage({Key? key, required this.username, required this.game})

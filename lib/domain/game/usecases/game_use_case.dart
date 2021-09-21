@@ -1,8 +1,8 @@
 
-import 'package:flutter_clean_architecture_template/domain/core/usecases/usecase.dart';
-import 'package:flutter_clean_architecture_template/domain/game/constants.dart';
-import 'package:flutter_clean_architecture_template/domain/game/entity/game.dart';
-import 'package:flutter_clean_architecture_template/domain/game/entity/game_properties.dart';
+import 'package:flip_flop_game/domain/core/usecases/usecase.dart';
+import 'package:flip_flop_game/domain/game/constants.dart';
+import 'package:flip_flop_game/domain/game/entity/game.dart';
+import 'package:flip_flop_game/domain/game/entity/game_properties.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

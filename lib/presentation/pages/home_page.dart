@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_clean_architecture_template/domain/game/entity/game.dart';
-import 'package:flutter_clean_architecture_template/domain/game/entity/game_properties.dart';
-import 'package:flutter_clean_architecture_template/domain/game/usecases/game_use_case.dart';
-import 'package:flutter_clean_architecture_template/injection.dart';
-import 'package:flutter_clean_architecture_template/presentation/navigation/app_route.gr.dart';
-import 'package:flutter_clean_architecture_template/usecase/feedback/feedback_bloc.dart';
+import 'package:flip_flop_game/domain/game/entity/game.dart';
+import 'package:flip_flop_game/domain/game/entity/game_properties.dart';
+import 'package:flip_flop_game/domain/game/usecases/game_use_case.dart';
+import 'package:flip_flop_game/injection.dart';
+import 'package:flip_flop_game/presentation/navigation/app_route.gr.dart';
+import 'package:flip_flop_game/usecase/feedback/feedback_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

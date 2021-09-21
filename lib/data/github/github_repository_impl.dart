@@ -1,7 +1,7 @@
-import 'package:flutter_clean_architecture_template/data/core/remote/rest_client_configuration.dart';
-import 'package:flutter_clean_architecture_template/data/github/remote/github_rest_api_client.dart';
-import 'package:flutter_clean_architecture_template/domain/github/entities/issue.dart';
-import 'package:flutter_clean_architecture_template/domain/github/i_github_repository.dart';
+import 'package:flip_flop_game/data/core/remote/rest_client_configuration.dart';
+import 'package:flip_flop_game/data/github/remote/github_rest_api_client.dart';
+import 'package:flip_flop_game/domain/github/entities/issue.dart';
+import 'package:flip_flop_game/domain/github/i_github_repository.dart';
 import 'package:injectable/injectable.dart';
 
 @Singleton(as: IGithubRepository)

@@ -1,6 +1,6 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_architecture_template/domain/game/constants.dart';
+import 'package:flip_flop_game/domain/game/constants.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 

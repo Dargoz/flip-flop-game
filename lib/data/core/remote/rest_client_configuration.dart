@@ -1,4 +1,4 @@
-import 'package:flutter_clean_architecture_template/data/interceptor.dart';
+import 'package:flip_flop_game/data/interceptor.dart';
 import 'package:dio/dio.dart';
 
 

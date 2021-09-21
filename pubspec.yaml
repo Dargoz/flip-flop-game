@@ -1,5 +1,5 @@
-name: flutter_clean_architecture_template
-description: Flutter Clean Architecture project
+name: flip_flop_game
+description: Flip Flop Game
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.

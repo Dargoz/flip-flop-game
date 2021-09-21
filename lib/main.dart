@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:flutter_clean_architecture_template/injection.dart';
-import 'package:flutter_clean_architecture_template/presentation/navigation/app_route.gr.dart';
+import 'package:flip_flop_game/injection.dart';
+import 'package:flip_flop_game/presentation/navigation/app_route.gr.dart';
 
 void main() {
   configureDependencies();
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Brand-Pedia',
+      title: 'Flip Flop Game',
       theme: ThemeData(
         // This is the theme of your application.
         //

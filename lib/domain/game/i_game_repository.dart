@@ -1,4 +1,4 @@
-import 'package:flutter_clean_architecture_template/domain/game/entity/player.dart';
+import 'package:flip_flop_game/domain/game/entity/player.dart';
 
 abstract class IGameRepository {
 

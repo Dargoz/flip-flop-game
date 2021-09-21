@@ -1,4 +1,4 @@
-import 'package:flutter_clean_architecture_template/data/github/remote/reponses/user_response.dart';
+import 'package:flip_flop_game/data/github/remote/reponses/user_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'issue_response.g.dart';
