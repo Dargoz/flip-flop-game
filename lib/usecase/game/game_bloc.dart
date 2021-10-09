@@ -10,7 +10,7 @@ part 'game_state.dart';
 
 part 'game_bloc.freezed.dart';
 
-@injectable
+@singleton
 class GameBloc extends Bloc<GameEvent, GameState> {
   GameBloc()
       : super(GameState(
