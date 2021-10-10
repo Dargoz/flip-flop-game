@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:auto_route/src/router/auto_router_x.dart';
+import 'package:flip_flop_game/presentation/navigation/app_route.gr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +31,12 @@ class GamePage extends StatelessWidget {
           children: [
             Container(
               child: BlocConsumer<TimerBloc, TimerState>(
-                listener: (context, state) {},
+                listener: (context, state) {
+                  if(!state.start) {
+                    timer?.cancel();
+                    context.navigateTo(ResultRoute(score: "${state.score}"));
+                  }
+                },
                 builder: (context, state) {
                   if (!state.isActive) {
                     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
