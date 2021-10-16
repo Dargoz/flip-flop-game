@@ -50,16 +50,21 @@ class MyHomePage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
-                          child: Text(
-                            localizations.leaderboard,
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold),
+                      MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.navigateTo(const LeaderboardRoute());
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(32, 32, 32, 0),
+                            child: Text(
+                              localizations.leaderboard,
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ),
                         ),
                       ),
@@ -93,9 +98,7 @@ class MyHomePage extends StatelessWidget {
   void createNewGame(BuildContext context) async {
     GameUseCase gameUseCase = getIt<GameUseCase>();
     print('game use case : $gameUseCase');
-    Game game = await gameUseCase
-        .executeUseCase(GameProperties(seed: 1));
-    context.navigateTo(
-        GameRoute(username: 'DRG', game: game));
+    Game game = await gameUseCase.executeUseCase(GameProperties(seed: 1));
+    context.navigateTo(GameRoute(username: 'DRG', game: game));
   }
 }
