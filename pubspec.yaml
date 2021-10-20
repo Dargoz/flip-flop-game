@@ -31,7 +31,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   crypto: ^3.0.1
-  auto_route: ^2.3.2
+  auto_route: ^3.0.1
   json_annotation: ^4.0.1
   shared_preferences: ^2.0.5
   retrofit: ^2.0.1
@@ -52,7 +52,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^2.0.1
   analyzer: ^2.2.0
-  auto_route_generator: ^2.3.2
+  auto_route_generator: ^3.0.1
   retrofit_generator: ^2.0.1
   injectable_generator: ^1.4.1
   json_serializable: ^5.0.0
