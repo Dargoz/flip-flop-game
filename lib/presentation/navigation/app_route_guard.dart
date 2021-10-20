@@ -5,7 +5,9 @@ class AppRouteGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    // TODO: implement onNavigation intercept (ex: validate Session before navigate to specific page)
+    print("router : ${router.current.name}");
+    print("path : ${router.current.pathParams}");
+    resolver.next();
   }
 
 }
