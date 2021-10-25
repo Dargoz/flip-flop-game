@@ -1,11 +1,16 @@
+import 'package:flip_flop_game/domain/game/constants.dart';
 import 'package:flip_flop_game/domain/maintenance/utils/format_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MaintenancePage extends StatelessWidget {
-  const MaintenancePage({Key? key, required this.message}) : super(key: key);
+  const MaintenancePage(
+      {Key? key, required this.message, required this.groupId})
+      : super(key: key);
 
   final String message;
+  final String groupId;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +26,11 @@ class MaintenancePage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const Spacer(flex: 4),
+                    Image.asset(
+                      "resources/pokemon/${GameConfig.pokemon[groupId]}.png",
+                      scale: 5,
+                    ),
                     const Spacer(flex: 4),
                     Container(
                       decoration: BoxDecoration(
@@ -57,13 +67,27 @@ class MaintenancePage extends StatelessWidget {
                                 const Spacer(),
                                 _buildNumberFrame(remaining.daysLeft, "days"),
                                 _buildNumberFrame(remaining.hoursLeft, "hours"),
-                                _buildNumberFrame(remaining.minutesLeft, "minutes"),
-                                _buildNumberFrame(remaining.secondsLeft, "seconds"),
+                                _buildNumberFrame(
+                                    remaining.minutesLeft, "minutes"),
+                                _buildNumberFrame(
+                                    remaining.secondsLeft, "seconds"),
                                 const Spacer(),
                               ],
                             ),
                           );
                         }),
+                    const Spacer(flex: 4),
+                    MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: GestureDetector(
+                        onTap: () => launch(
+                            'https://docs.flutter.io/flutter/services/UrlLauncher-class.html'),
+                        child: Image.asset(
+                          "resources/misc/treasure-chest.png",
+                          scale: 5,
+                        ),
+                      ),
+                    ),
                     const Spacer(flex: 4),
                   ],
                 ));
