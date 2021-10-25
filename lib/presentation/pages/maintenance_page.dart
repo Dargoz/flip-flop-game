@@ -6,11 +6,15 @@ import 'package:url_launcher/url_launcher.dart';
 
 class MaintenancePage extends StatelessWidget {
   const MaintenancePage(
-      {Key? key, required this.message, required this.groupId})
+      {Key? key,
+      required this.message,
+      required this.groupId,
+      required this.redirectLink})
       : super(key: key);
 
   final String message;
   final String groupId;
+  final String redirectLink;
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +84,7 @@ class MaintenancePage extends StatelessWidget {
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
-                        onTap: () => launch(
-                            'https://docs.flutter.io/flutter/services/UrlLauncher-class.html'),
+                        onTap: () => launch(redirectLink),
                         child: Image.asset(
                           "resources/misc/treasure-chest.png",
                           scale: 5,

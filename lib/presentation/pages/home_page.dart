@@ -4,9 +4,6 @@ import 'package:flip_flop_game/domain/firebase/i_firebase_repository.dart';
 import 'package:flip_flop_game/domain/game/constants.dart';
 import 'package:flip_flop_game/presentation/pages/unknown_page.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flip_flop_game/domain/game/entity/game.dart';
-import 'package:flip_flop_game/domain/game/entity/game_properties.dart';
-import 'package:flip_flop_game/domain/game/usecases/game_use_case.dart';
 import 'package:flip_flop_game/injection.dart';
 import 'package:flip_flop_game/presentation/navigation/app_route.gr.dart';
 import 'package:flip_flop_game/usecase/feedback/feedback_bloc.dart';
@@ -24,7 +21,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('pathParam : ${groupId}');
     if (groupId.isEmpty || GameConfig.profile[groupId] == null) {
       return const UnknownPage();
     } else {
@@ -38,10 +34,13 @@ class MyHomePage extends StatelessWidget {
     return StreamBuilder(
         stream: firebaseRepository.getConfig(),
         builder: (context, snapshot) {
-          var config =
-              (snapshot.data as Config?) ?? Config(true, 'Stay Tune!', 1);
+          var config = (snapshot.data as Config?) ??
+              Config(true, 'Stay Tune!', "https://dargoz.com", 1);
           if (config.maintenance) {
-            return MaintenancePage(message: config.mtMessage);
+            return MaintenancePage(
+                message: config.mtMessage,
+                groupId: groupId,
+                redirectLink: config.link);
           } else {
             return BlocProvider(
                 create: (context) => getIt<FeedbackBloc>(),
@@ -54,29 +53,31 @@ class MyHomePage extends StatelessWidget {
                       children: [
                         const Spacer(flex: 2),
                         Image.asset(
-                            "resources/pokemon/${GameConfig.pokemon[groupId]}.png",
-                        scale: 5,),
+                          "resources/pokemon/${GameConfig.pokemon[groupId]}.png",
+                          scale: 5,
+                        ),
                         Center(
                             child: Text(
-                              'Welcome Team ${GameConfig.profile[groupId]}!',
-                              style: const TextStyle(
-                                  color: Colors.blueGrey,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold),
-                            )),
+                          'Welcome Team ${GameConfig.profile[groupId]}!',
+                          style: const TextStyle(
+                              color: Colors.blueGrey,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold),
+                        )),
                         const Spacer(flex: 1),
                         Container(
                           decoration: const BoxDecoration(
                               color: Colors.blueAccent,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(16))),
+                                  BorderRadius.all(Radius.circular(16))),
                           child: Column(
                             children: [
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
                                 child: GestureDetector(
                                   onTap: () {
-                                    createNewGame(context);
+                                    context.navigateTo(SelectUserRoute(
+                                        groupId: GameConfig.profile[groupId]!));
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.fromLTRB(
@@ -114,8 +115,8 @@ class MyHomePage extends StatelessWidget {
                               GestureDetector(
                                 onTap: () {},
                                 child: Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                      32, 32, 32, 32),
+                                  padding:
+                                      const EdgeInsets.fromLTRB(32, 32, 32, 32),
                                   child: Text(
                                     localizations.about,
                                     style: const TextStyle(
@@ -140,12 +141,4 @@ class MyHomePage extends StatelessWidget {
           }
         });
   }
-
-  void createNewGame(BuildContext context) async {
-    GameUseCase gameUseCase = getIt<GameUseCase>();
-    print('game use case : $gameUseCase');
-    Game game = await gameUseCase.executeUseCase(GameProperties(seed: 1));
-    context.navigateTo(GameRoute(username: 'DRG', game: game));
-  }
-
 }

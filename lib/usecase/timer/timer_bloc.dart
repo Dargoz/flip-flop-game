@@ -34,7 +34,6 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
   @override
   Stream<TimerState> mapEventToState(TimerEvent event) async* {
     yield* event.map(tickTimer: (startTimer) async* {
-      print("gameEnd : $gameEnd");
       if (gameEnd) {
         yield TimerState(
             seconds: state.seconds,
