@@ -22,55 +22,64 @@ class GamePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => getIt<GameBloc>()),
-          BlocProvider(create: (context) => getIt<TimerBloc>()),
-        ],
-        child: Column(
-          children: [
-            Container(
-              child: BlocConsumer<TimerBloc, TimerState>(
-                listener: (context, state) {
-                  if(!state.start) {
-                    timer?.cancel();
-                    context.navigateTo(ResultRoute(score: "${state.score}"));
-                  }
-                },
-                builder: (context, state) {
-                  if (!state.isActive) {
-                    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-                      BlocProvider.of<TimerBloc>(context)
-                          .add(TimerEvent.tickTimer());
-                    });
-                  }
-                  return Text(
-                      'game time ${state.hours}:${state.minutes}:${state.seconds}');
-                },
-              ),
-            ),
-            Container(
-              color: Colors.greenAccent,
-              width: MediaQuery.of(context).size.width * 0.5,
-              padding: const EdgeInsets.all(18),
-              child: GridView.count(
-                crossAxisCount: 6,
-                mainAxisSpacing: 8,
-                crossAxisSpacing: 8,
-                childAspectRatio: 0.7,
-                shrinkWrap: true,
-                children: [
-                  for (int index = 0; index < GameConfig.quantity; index++)
-                    CardFlipWidget(
-                      position: index,
-                      frontAsset: game.assetPaths[index],
-                      rearAsset: 'resources/cover/card_design.png',
-                    )
-                ],
-              ),
-            ),
-            const Spacer()
+    return Scaffold(
+      body: MultiBlocProvider(
+          providers: [
+            BlocProvider(create: (context) => getIt<GameBloc>()),
+            BlocProvider(create: (context) => getIt<TimerBloc>()),
           ],
-        ));
+          child: Center(
+              child: Column(
+            children: [
+              Container(
+                child: BlocConsumer<TimerBloc, TimerState>(
+                  listener: (context, state) {
+                    if (!state.start) {
+                      timer?.cancel();
+                      context.navigateTo(ResultRoute(score: "${state.score}"));
+                    }
+                  },
+                  builder: (context, state) {
+                    if (!state.isActive) {
+                      timer =
+                          Timer.periodic(const Duration(seconds: 1), (timer) {
+                        BlocProvider.of<TimerBloc>(context)
+                            .add(TimerEvent.tickTimer());
+                      });
+                    }
+                    return Text(
+                        'game time ${state.hours}:${state.minutes}:${state.seconds}');
+                  },
+                ),
+              ),
+              const Spacer(),
+              Container(
+                constraints: const BoxConstraints(minWidth: 100, maxWidth: 800),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height * 0.9,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: 5,
+                    runSpacing: 5,
+                    children: [
+                      for (int index = 0; index < GameConfig.quantity; index++)
+                        SizedBox(
+                          width: 120,
+                          height: 180,
+                          child: CardFlipWidget(
+                            position: index,
+                            frontAsset: game.assetPaths[index],
+                            rearAsset: 'resources/cover/card_design.png',
+                          ),
+                        )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ))),
+    );
   }
 }
