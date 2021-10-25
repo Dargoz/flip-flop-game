@@ -41,6 +41,7 @@ dependencies:
   google_sign_in: ^5.0.4
   package_info_plus: ^1.0.1
   freezed_annotation: ^0.14.2
+  url_launcher: ^6.0.12
   path: ^1.8.0
   firebase_core: ^1.7.0
   firebase_database: ^8.0.0
@@ -79,6 +80,7 @@ flutter:
     - resources/pack1/
     - resources/pack2/
     - resources/pokemon/
+    - resources/misc/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
