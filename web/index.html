@@ -37,6 +37,12 @@
 <body>
   <!-- Firebase Configuration -->
   <script>
+    window.addEventListener('beforeunload', function (e) {
+      // Cancel the event
+      e.preventDefault(); // If you prevent default behavior in Mozilla Firefox prompt will always be shown
+      // Chrome requires returnValue to be set
+      e.returnValue = 'your changes will lost';
+    });
     const firebaseConfig = {
       apiKey: "AIzaSyDORhDvvZTQUP7F6eo1MbO3sguGqPpUSSA",
       authDomain: "flip-flop-game.firebaseapp.com",
