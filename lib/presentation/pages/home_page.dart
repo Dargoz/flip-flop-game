@@ -3,6 +3,7 @@ import 'package:flip_flop_game/domain/firebase/entities/config.dart';
 import 'package:flip_flop_game/domain/firebase/i_firebase_repository.dart';
 import 'package:flip_flop_game/domain/game/constants.dart';
 import 'package:flip_flop_game/presentation/pages/unknown_page.dart';
+import 'package:flip_flop_game/presentation/widgets/loading_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flip_flop_game/injection.dart';
 import 'package:flip_flop_game/presentation/navigation/app_route.gr.dart';
@@ -34,13 +35,14 @@ class MyHomePage extends StatelessWidget {
     return StreamBuilder(
         stream: firebaseRepository.getConfig(),
         builder: (context, snapshot) {
-          var config = (snapshot.data as Config?) ??
-              Config(true, 'Stay Tune!', "https://dargoz.com", 1);
-          if (config.maintenance) {
+          var config = (snapshot.data as Config?);
+          if (config == null) {
+            return LoadingWidget();
+          } else if (config.maintenance) {
             return MaintenancePage(
-                message: config.mtMessage,
-                groupId: groupId,
-                redirectLink: config.link);
+              config: config,
+              groupId: groupId,
+            );
           } else {
             return BlocProvider(
                 create: (context) => getIt<FeedbackBloc>(),
@@ -74,6 +76,7 @@ class MyHomePage extends StatelessWidget {
                             children: [
                               MouseRegion(
                                 cursor: SystemMouseCursors.click,
+                                onHover: (event) {},
                                 child: GestureDetector(
                                   onTap: () {
                                     context.navigateTo(SelectUserRoute(

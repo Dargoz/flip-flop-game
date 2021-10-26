@@ -1,3 +1,4 @@
+import 'package:flip_flop_game/domain/firebase/entities/config.dart';
 import 'package:flip_flop_game/domain/game/constants.dart';
 import 'package:flip_flop_game/domain/maintenance/utils/format_util.dart';
 import 'package:flutter/cupertino.dart';
@@ -5,19 +6,18 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MaintenancePage extends StatelessWidget {
-  const MaintenancePage(
-      {Key? key,
-      required this.message,
-      required this.groupId,
-      required this.redirectLink})
-      : super(key: key);
+  const MaintenancePage({
+    Key? key,
+    required this.config,
+    required this.groupId,
+  }) : super(key: key);
 
-  final String message;
+  final Config config;
   final String groupId;
-  final String redirectLink;
 
   @override
   Widget build(BuildContext context) {
+    var fileName = GameConfig.pokemon[groupId];
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 187, 231, 255),
         body: LayoutBuilder(
@@ -32,8 +32,10 @@ class MaintenancePage extends StatelessWidget {
                   children: [
                     const Spacer(flex: 4),
                     Image.asset(
-                      "resources/pokemon/${GameConfig.pokemon[groupId]}.png",
-                      scale: 5,
+                      "resources/pokemon/$fileName.png",
+                      scale: fileName == config.placeholderName
+                          ? config.customScale
+                          : 5,
                     ),
                     const Spacer(flex: 4),
                     Container(
@@ -47,7 +49,8 @@ class MaintenancePage extends StatelessWidget {
                       child: Padding(
                           padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
                           child: Text(
-                            message,
+                            config.mtMessage,
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
                                 color: Color.fromARGB(200, 69, 69, 69),
                                 fontSize: 42,
@@ -84,7 +87,7 @@ class MaintenancePage extends StatelessWidget {
                     MouseRegion(
                       cursor: SystemMouseCursors.click,
                       child: GestureDetector(
-                        onTap: () => launch(redirectLink),
+                        onTap: () => launch(config.link),
                         child: Image.asset(
                           "resources/misc/treasure-chest.png",
                           scale: 5,

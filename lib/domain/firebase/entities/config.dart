@@ -4,11 +4,14 @@ part 'config.g.dart';
 
 @JsonSerializable()
 class Config {
-  Config(this.maintenance, this.mtMessage, this.link, this.version);
+  Config(this.maintenance, this.mtMessage, this.placeholderName, this.link,
+      this.customScale, this.version);
 
   bool maintenance;
   String mtMessage;
+  String placeholderName;
   String link;
+  double customScale;
   int version;
 
   factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
