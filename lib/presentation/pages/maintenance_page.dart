@@ -53,7 +53,7 @@ class MaintenancePage extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 color: Color.fromARGB(200, 69, 69, 69),
-                                fontSize: 42,
+                                fontSize: 18,
                                 fontStyle: FontStyle.normal,
                                 fontWeight: FontWeight.bold),
                           )),
