@@ -37,7 +37,7 @@ class MyHomePage extends StatelessWidget {
         builder: (context, snapshot) {
           var config = (snapshot.data as Config?);
           if (config == null) {
-            return LoadingWidget();
+            return const LoadingWidget();
           } else if (config.maintenance) {
             return MaintenancePage(
               config: config,
@@ -60,7 +60,7 @@ class MyHomePage extends StatelessWidget {
                         ),
                         Center(
                             child: Text(
-                          'Welcome Team ${GameConfig.profile[groupId]}!',
+                          'Welcome ${GameConfig.pokemon[groupId]} Team!',
                           style: const TextStyle(
                               color: Colors.blueGrey,
                               fontSize: 24,
@@ -115,20 +115,32 @@ class MyHomePage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {},
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(32, 32, 32, 32),
-                                  child: Text(
-                                    localizations.about,
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.bold),
+                              MouseRegion(
+                                cursor: SystemMouseCursors.click,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    showAboutDialog(
+                                        context: context,
+                                        applicationVersion: '1.0.0',
+                                        applicationLegalese:
+                                            'this app was created by DRG.'
+                                            '\nIf you want to support and appreciate me,'
+                                            '\nyou can do that by endorsing me at:'
+                                            '\nhttps://linkedin.com/in/dargoz');
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        32, 32, 32, 32),
+                                    child: Text(
+                                      localizations.about,
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
                                 ),
-                              ),
+                              )
                             ],
                           ),
                         ),
