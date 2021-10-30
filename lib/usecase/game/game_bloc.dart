@@ -1,3 +1,5 @@
+import 'package:flip_flop_game/domain/firebase/entities/player.dart';
+import 'package:flip_flop_game/domain/firebase/i_firebase_repository.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flip_flop_game/domain/game/constants.dart';
@@ -12,11 +14,13 @@ part 'game_bloc.freezed.dart';
 
 @singleton
 class GameBloc extends Bloc<GameEvent, GameState> {
-  GameBloc()
+  GameBloc(this._firebaseRepository)
       : super(GameState(
             showFrontSide: List.filled(GameConfig.quantity, false),
             openedCardPosition: List.empty(growable: true),
             cardPair: List.filled(2, "")));
+
+  final IFirebaseRepository _firebaseRepository;
 
   @override
   Stream<GameState> mapEventToState(GameEvent event) async* {
@@ -62,7 +66,16 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           }
         },
         onValidate: (GameValidate value) async* {},
-        onGameEnd: (onGameEnd) async* {});
+        onGameEnd: (onGameEnd) async* {
+          Player player = onGameEnd.player;
+          if(player.firstScore == 0) {
+            player.firstScore = onGameEnd.sore;
+          }
+          if(player.bestScore == 0 || player.bestScore > onGameEnd.sore) {
+            player.bestScore = onGameEnd.sore;
+          }
+          _firebaseRepository.updatePlayer(player);
+        });
   }
 
   void validate() {
@@ -88,13 +101,6 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         gameEnd: state.gameEnd);
   }
 
-  void _replaceState(GameState gameState) {
-    state.showFrontSide = gameState.showFrontSide;
-    state.openedCardCount = gameState.openedCardCount;
-    state.animationEndCount = gameState.animationEndCount;
-    state.allowUserAction = gameState.allowUserAction;
-    state.wrong = gameState.wrong;
-  }
 
   void reset() {
     state.openedCardCount = 0;

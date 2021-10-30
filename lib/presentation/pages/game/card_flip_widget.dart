@@ -86,7 +86,7 @@ class _CardWidgetState extends State<CardFlipWidget> {
           return GestureDetector(
             onTap: _onTapCard,
             child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 400),
+              duration: const Duration(milliseconds: 300),
               transitionBuilder: __transitionBuilder,
               layoutBuilder: (widget, list) =>
                   Stack(children: [widget!, ...list]),
@@ -140,22 +140,4 @@ class _CardWidgetState extends State<CardFlipWidget> {
     );
   }
 
-  Widget __buildLayout(
-      {required Key key,
-      required Widget child,
-      required String faceName,
-      required Color backgroundColor}) {
-    return Container(
-      key: key,
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.circular(20.0),
-        color: backgroundColor,
-      ),
-      child: Center(
-        child: Text(faceName.substring(0, 1),
-            style: const TextStyle(fontSize: 80.0)),
-      ),
-    );
-  }
 }

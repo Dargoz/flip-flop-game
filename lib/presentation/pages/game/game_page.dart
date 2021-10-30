@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/src/router/auto_router_x.dart';
+import 'package:flip_flop_game/domain/firebase/entities/player.dart';
 import 'package:flip_flop_game/presentation/navigation/app_route.gr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +14,10 @@ import 'package:flip_flop_game/usecase/game/game_bloc.dart';
 import 'package:flip_flop_game/usecase/timer/timer_bloc.dart';
 
 class GamePage extends StatelessWidget {
-  GamePage({Key? key, required this.username, required this.game})
+  GamePage({Key? key, required this.player, required this.game})
       : super(key: key);
 
-  final String username;
+  final Player player;
   final Game game;
   Timer? timer;
 
@@ -35,6 +36,8 @@ class GamePage extends StatelessWidget {
                 child: BlocConsumer<TimerBloc, TimerState>(
                   listener: (context, state) {
                     if (!state.start) {
+                      BlocProvider.of<GameBloc>(context)
+                          .add(GameEvent.onGameEnd(player, state.score));
                       timer?.cancel();
                       context.navigateTo(ResultRoute(score: "${state.score}"));
                     }

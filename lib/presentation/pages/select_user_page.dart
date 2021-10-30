@@ -93,7 +93,7 @@ class SelectUserPage extends StatelessWidget {
                     }),
                 MaterialButton(
                   onPressed: () {
-                    createNewGame(context, player.name);
+                    createNewGame(context, player);
                   },
                   child: const Text(
                     "Let's Goo'",
@@ -111,10 +111,10 @@ class SelectUserPage extends StatelessWidget {
     );
   }
 
-  void createNewGame(BuildContext context, String username) async {
+  void createNewGame(BuildContext context, Player player) async {
     GameUseCase gameUseCase = getIt<GameUseCase>();
     Game game = await gameUseCase
         .executeUseCase(GameProperties(seed: int.parse(groupId)));
-    context.navigateTo(GameRoute(username: username, game: game));
+    context.navigateTo(GameRoute(player: player, game: game));
   }
 }

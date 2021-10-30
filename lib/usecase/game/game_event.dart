@@ -6,5 +6,5 @@ class GameEvent with _$GameEvent {
   factory GameEvent.onTapCard(int position, String cardIdentity) = GameTapCard;
   factory GameEvent.onValidate() = GameValidate;
   factory GameEvent.onAnimationStatus(AnimationStatus status) = GameAnimationStatus;
-  factory GameEvent.onGameEnd() = GameEnd;
+  factory GameEvent.onGameEnd(Player player, int sore) = GameEnd;
 }
