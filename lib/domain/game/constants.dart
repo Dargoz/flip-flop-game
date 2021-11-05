@@ -1,5 +1,5 @@
 class GameConfig {
-  static const quantity = 18;
+  static const quantity = 22;
   static const maxOpenedCard = 2;
 
   static const _profile1 = "281462a36f680fbb1608774008d10f8be3afb33aa8c57f74e87d5f9c19f4761e";

@@ -26,6 +26,7 @@ class _CardWidgetState extends State<CardFlipWidget> {
   late bool _flipXAxis;
   bool _userClick = false;
   bool _allowAction = true;
+  bool initial = true;
 
   @override
   void initState() {
@@ -59,7 +60,7 @@ class _CardWidgetState extends State<CardFlipWidget> {
   }
 
   void _openCard() {
-    if(!_showFrontSide) {
+    if (!_showFrontSide) {
       BlocProvider.of<GameBloc>(context)
           .add(GameEvent.onTapCard(widget.position, widget.frontAsset));
       if (_allowAction) {
@@ -68,7 +69,6 @@ class _CardWidgetState extends State<CardFlipWidget> {
         });
       }
     }
-
   }
 
   void _closeCard() {
@@ -83,6 +83,15 @@ class _CardWidgetState extends State<CardFlipWidget> {
           if (state.wrong && state.showFrontSide[widget.position]) {
             _closeCard();
           }
+          if(initial) {
+            if(state.initLoading) {
+              _showFrontSide = true;
+            } else {
+              _showFrontSide = false;
+              initial = false;
+            }
+          }
+
           return GestureDetector(
             onTap: _onTapCard,
             child: AnimatedSwitcher(
@@ -98,17 +107,17 @@ class _CardWidgetState extends State<CardFlipWidget> {
         });
   }
 
-  Widget __transitionBuilder(Widget widget, Animation<double> animation) {
+  Widget __transitionBuilder(Widget mWidget, Animation<double> animation) {
     animation.addStatusListener((status) {
       if (_userClick) {
         BlocProvider.of<GameBloc>(context)
-            .add(GameEvent.onAnimationStatus(status));
+            .add(GameEvent.onAnimationStatus(widget.position, status));
       }
     });
     final rotateAnim = Tween(begin: pi, end: 0.0).animate(animation);
     return AnimatedBuilder(
       animation: rotateAnim,
-      child: widget,
+      child: mWidget,
       builder: (context, widget) {
         final isUnder = (ValueKey(_showFrontSide) != widget!.key);
         var tilt = ((animation.value - 0.5).abs() - 0.5) * 0.003;
@@ -129,15 +138,27 @@ class _CardWidgetState extends State<CardFlipWidget> {
   Widget _buildFront() {
     return Container(
       key: const ValueKey(true),
-      child: Image.asset(widget.frontAsset),
+      child: Image.asset(widget.frontAsset,
+          frameBuilder: (mContext, child, frame, wasAsync) {
+        if (frame != null) {
+          BlocProvider.of<GameBloc>(context)
+              .add(GameEvent.onGameStart(widget.position));
+        }
+        return child;
+      }),
     );
   }
 
   Widget _buildRear() {
     return Container(
       key: const ValueKey(false),
-      child: Image.asset(widget.rearAsset),
+      child: Image.asset(widget.rearAsset,
+          frameBuilder: (mContext, child, frame, wasAsync) {
+        if (frame == null) {
+          return const CircularProgressIndicator();
+        }
+        return child;
+      }),
     );
   }
-
 }

@@ -7,6 +7,7 @@ import 'package:flip_flop_game/presentation/pages/result_page.dart';
 import 'package:flip_flop_game/presentation/pages/select_user_page.dart';
 
 @MaterialAutoRouter(replaceInRouteName: 'Page,Route', routes: <AutoRoute>[
+
   AutoRoute(
       path: '/:${MyHomePage.groupIdParam}',
       page: MyHomePage,
@@ -14,7 +15,7 @@ import 'package:flip_flop_game/presentation/pages/select_user_page.dart';
       initial: true),
   AutoRoute(page: SelectUserPage),
   AutoRoute(page: GamePage),
-  AutoRoute(page: LeaderboardPage),
+  AutoRoute(path: 'leaderboard-page', page: LeaderboardPage),
   AutoRoute(page: ResultPage)
 ])
 class $AppRouter {}

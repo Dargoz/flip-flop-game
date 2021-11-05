@@ -19,7 +19,6 @@ class GameUseCase extends UseCase<Game, GameProperties> {
     }
 
     _assetPaths.shuffle();
-    print("assetPaths : $_assetPaths");
     return Game(_assetPaths);
   }
 

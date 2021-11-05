@@ -9,7 +9,7 @@ class ResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("Your Score :$score"),
+      child: Text("Your Score :$score\nSilakan tutup halaman ini"),
     );
   }
 

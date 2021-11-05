@@ -8,6 +8,8 @@ class GameState {
       this.openedCardCount = 0,
       this.animationEndCount = 0,
       this.correct = 0,
+      this.renderCount = 0,
+      this.initLoading = true,
       this.allowUserAction = true,
       this.wrong = false,
       this.gameEnd = false});
@@ -18,6 +20,8 @@ class GameState {
   int openedCardCount;
   int animationEndCount;
   int correct;
+  int renderCount;
+  bool initLoading;
   bool allowUserAction;
   bool wrong;
   bool gameEnd;

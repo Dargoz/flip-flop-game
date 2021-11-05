@@ -14,7 +14,7 @@ part 'timer_bloc.freezed.dart';
 @injectable
 class TimerBloc extends Bloc<TimerEvent, TimerState> {
   final GameBloc _gameBloc;
-  int seconds = 0;
+  int seconds = 180;
   bool gameEnd = false;
 
   TimerBloc(this._gameBloc)
@@ -24,8 +24,14 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
             hours: 0,
             score: 0,
             start: true,
+            pause: true,
             isActive: false)) {
     _gameBloc.stream.listen((event) {
+      print("game bloc event : ${event.renderCount}");
+      if(!event.initLoading) {
+        print('start the GAMEEEEE');
+        state.pause = false;
+      }
       gameEnd = event.gameEnd;
       print("game bloc event : ${event.gameEnd}");
     });
@@ -41,19 +47,23 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
             hours: state.hours,
             score: state.score,
             start: false,
+            pause: state.pause,
             isActive: true);
       } else {
-        state.seconds = ++seconds % 60;
-        state.minutes = seconds ~/ 60;
-        state.hours = seconds ~/ 3600;
-        state.score = seconds;
-        yield TimerState(
-            seconds: state.seconds,
-            minutes: state.minutes,
-            hours: state.hours,
-            score: state.score,
-            start: true,
-            isActive: true);
+        if(!state.pause) {
+          state.seconds = --seconds % 60;
+          state.minutes = seconds ~/ 60;
+          state.hours = seconds ~/ 3600;
+          state.score = seconds;
+          yield TimerState(
+              seconds: state.seconds,
+              minutes: state.minutes,
+              hours: state.hours,
+              score: state.score,
+              start: true,
+              pause: state.pause,
+              isActive: true);
+        }
       }
     }, stopTimer: (stopTimer) async* {
       yield TimerState(
@@ -62,6 +72,7 @@ class TimerBloc extends Bloc<TimerEvent, TimerState> {
           hours: state.hours,
           score: state.score,
           start: false,
+          pause: state.pause,
           isActive: false);
     });
   }

@@ -39,7 +39,7 @@ class FirebaseRepositoryIml extends IFirebaseRepository {
           .map((element) => Player.fromJson(element.value))
           .toList();
       playerList.sort(
-          (player1, player2) => player1.bestScore.compareTo(player2.bestScore));
+          (player1, player2) => player2.firstScore.compareTo(player1.firstScore));
       return playerList;
     });
     return streamPublish;

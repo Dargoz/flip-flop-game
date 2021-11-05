@@ -79,6 +79,11 @@ flutter:
     - resources/cover/
     - resources/pack1/
     - resources/pack2/
+    - resources/pack3/
+    - resources/pack4/
+    - resources/pack5/
+    - resources/pack6/
+    - resources/pack7/
     - resources/pokemon/
     - resources/misc/
 

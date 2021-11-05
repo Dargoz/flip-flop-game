@@ -25,11 +25,17 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   @override
   Stream<GameState> mapEventToState(GameEvent event) async* {
     yield* event.map(
-        onGameStart: (onGameStart) async* {},
+        onGameStart: (onGameStart) async* {
+          print('render count : ${state.renderCount}');
+          if(state.initLoading && ++state.renderCount >= GameConfig.quantity - 1) {
+            state.initLoading = false;
+            yield _copyWith();
+          }
+        },
         onTapCard: (onTapCard) async* {
           print("openCard count : ${state.openedCardCount}");
           int openCount = 0;
-          if (state.allowUserAction) {
+          if (state.allowUserAction && !state.showFrontSide[onTapCard.position]) {
             state.cardPair[state.openedCardCount] = onTapCard.cardIdentity;
             openCount = ++state.openedCardCount;
 
@@ -45,10 +51,15 @@ class GameBloc extends Bloc<GameEvent, GameState> {
           }
         },
         onAnimationStatus: (GameAnimationStatus animationStatus) async* {
-          print("status called ${animationStatus.status}");
+          print("status called ${animationStatus.status} card position : ${animationStatus.position}");
           if (animationStatus.status == AnimationStatus.dismissed) {
             state.animationEndCount++;
             print("on ${animationStatus.status} : ${state.animationEndCount}");
+            if (state.animationEndCount == 4) {
+
+
+            }
+          } else if (animationStatus.status == AnimationStatus.completed) {
             if (state.animationEndCount == 2) {
               validate();
               if (!state.wrong) {
@@ -58,11 +69,15 @@ class GameBloc extends Bloc<GameEvent, GameState> {
               if (state.correct == GameConfig.quantity / 2) {
                 state.gameEnd = true;
               }
+              state.allowUserAction = true;
               yield _copyWith();
-            } else if (state.animationEndCount == 4) {
+            } if(state.animationEndCount == 4) {
               reset();
+              state.allowUserAction = true;
+              print("Closed card ${animationStatus.position}");
               yield _copyWith();
             }
+
           }
         },
         onValidate: (GameValidate value) async* {},
@@ -96,6 +111,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
         openedCardCount: state.openedCardCount,
         animationEndCount: state.animationEndCount,
         correct: state.correct,
+        renderCount: state.renderCount,
+        initLoading: state.initLoading,
         allowUserAction: state.allowUserAction,
         wrong: state.wrong,
         gameEnd: state.gameEnd);
@@ -105,7 +122,8 @@ class GameBloc extends Bloc<GameEvent, GameState> {
   void reset() {
     state.openedCardCount = 0;
     state.animationEndCount = 0;
-    state.allowUserAction = true;
+    state.initLoading = false;
+    state.allowUserAction = false;
     state.wrong = false;
     state.showFrontSide = List.filled(GameConfig.quantity, false);
   }

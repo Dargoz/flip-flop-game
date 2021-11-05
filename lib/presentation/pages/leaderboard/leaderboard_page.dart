@@ -104,7 +104,7 @@ class LeaderboardPage extends StatelessWidget {
                                                                   .bold))),
                                                   Expanded(
                                                       child: Text(
-                                                          player.bestScore
+                                                          player.firstScore
                                                               .toString(),
                                                           textAlign: TextAlign.end,
                                                           style: const TextStyle(

@@ -7,6 +7,7 @@ class TimerState {
       required this.hours,
       required this.score,
       required this.start,
+      required this.pause,
       required this.isActive});
 
   int seconds = 0;
@@ -14,5 +15,6 @@ class TimerState {
   int hours = 0;
   int score = 0;
   bool start = false;
+  bool pause = true;
   bool isActive = false;
 }

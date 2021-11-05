@@ -1,5 +1,4 @@
 
-import 'dart:io';
 
 import 'package:path/path.dart' as p;
 import 'dart:convert';
@@ -21,10 +20,6 @@ Future<void> main() async {
     print('  ${entry.style.toString().padRight(7)}: ${entry.separator}');
   }
 
-  var dir = Directory.fromUri(Uri.file('resources/pack1', windows: true));
-  await for (var entity in
-  dir.list(recursive: false, followLinks: false)) {
-    print(entity.path);
-  }
+
   print('end ========');
 }
