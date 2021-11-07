@@ -1,23 +1,26 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flip_flop_game/presentation/navigation/app_route_guard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'package:flutter_clean_architecture_template/injection.dart';
-import 'package:flutter_clean_architecture_template/presentation/navigation/app_route.gr.dart';
+import 'package:flip_flop_game/injection.dart';
+import 'package:flip_flop_game/presentation/navigation/app_route.gr.dart';
 
-void main() {
+Future<void> main() async {
   configureDependencies();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final _appRouter = AppRouter();
+  final _appRouter = AppRouter(appRouteGuard: AppRouteGuard());
 
   MyApp({Key? key}) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Brand-Pedia',
+      title: 'Flip Flop Game',
       theme: ThemeData(
         // This is the theme of your application.
         //

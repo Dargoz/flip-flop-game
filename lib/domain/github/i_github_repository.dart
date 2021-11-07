@@ -1,5 +1,5 @@
 
-import 'package:flutter_clean_architecture_template/domain/github/entities/issue.dart';
+import 'package:flip_flop_game/domain/github/entities/issue.dart';
 
 abstract class IGithubRepository {
 

@@ -1,6 +1,6 @@
-import 'package:flutter_clean_architecture_template/domain/github/entities/issue.dart';
-import 'package:flutter_clean_architecture_template/domain/github/i_github_repository.dart';
-import 'package:flutter_clean_architecture_template/usecase/core/status.dart';
+import 'package:flip_flop_game/domain/github/entities/issue.dart';
+import 'package:flip_flop_game/domain/github/i_github_repository.dart';
+import 'package:flip_flop_game/usecase/core/status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';

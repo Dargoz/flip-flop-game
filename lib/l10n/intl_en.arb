@@ -6,5 +6,8 @@
   "feedback": "Feedback",
   "title": "title",
   "description": "description",
-  "errorFeedback": "error submit feedback"
+  "errorFeedback": "error submit feedback",
+  "start": "Start",
+  "leaderboard": "Leaderboard",
+  "about": "About"
 }
